@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="mipop_switch"
+        android:persistent="true"
+        android:summary="@string/mipop_switch_summary"
+        android:title="@string/mipop_switch_title" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="mipop_fullscreen"
+        android:persistent="true"
+        android:summary="@string/mipop_fullscreen_summary"
+        android:title="@string/mipop_fullscreen_title" />
+
+    <Preference
+        android:key="image_preference"
+        android:layout="@layout/image_preference_layout"
+        android:selectable="false" />
+
+</PreferenceScreen>
