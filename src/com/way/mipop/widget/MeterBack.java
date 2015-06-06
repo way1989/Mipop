@@ -27,7 +27,7 @@ public class MeterBack extends MeterBase {
 		super(context);
 		Register(NAME, this);
 		setSoundEffectsEnabled(true);
-		setImageResource(R.drawable.idle_selector);
+		setImageResource(R.drawable.back_selector);
 		setResId(R.drawable.back, R.drawable.back_pressed);
 	}
 

@@ -11,8 +11,6 @@ import com.way.mipop.widget.MeterMenu;
 import com.way.mipop.widget.MeterRecent;
 import com.way.mipop.widget.Until;
 
-import java.util.Map;
-
 public class AnimationParking {
 	public static final boolean LEFT = true;
 	public static final boolean RIGHT = false;
@@ -40,35 +38,31 @@ public class AnimationParking {
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
-			 //parking();
+			 parking();
 		}
 	};
 	private static Runnable runnable4PosCheck = new Runnable() {
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
-			// AnimationParking.access$002(true);
-			// AnimationParking.access$102(true);
-			 //if (AnimationParking.mAreaChanged) {
-//			 AnimationParking.access$002(false);
-			//	 mAreaChanged = false;
-			// }
+			mTimeOut = true;
+			velocityCheck = true;
+			if (AnimationParking.mAreaChanged) {
+				mAreaChanged = false;
+			}
 		}
 	};
 	private static Runnable runnable4Shrink = new Runnable() {
 		@Override
 		public void run() {
-			 //shrinking();
+			 shrinking();
 		}
 	};
 	private static Runnable runnable4Turning = new Runnable() {
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
-			 //turning();
+			 turning();
 		}
 	};
 	private static boolean velocityCheck;
@@ -164,7 +158,7 @@ public class AnimationParking {
 						/ Until.SHRINK_LINE * (x - Until.MID_LINE) / 2;
 				return;
 			}
-		}else{
+		}
 		mAreaChanged = true;
 		recentX = x;
 		recentY = y;
@@ -173,7 +167,7 @@ public class AnimationParking {
 		menuX = x;
 		menuY = y;
 		hideSub();
-		}
+		
 	}
 
 	private static void quickSlide() {
@@ -187,6 +181,7 @@ public class AnimationParking {
 	}
 
 	private static void showOrHide(int x) {
+		//Log.i("way", "showOrHide velocityCheck = " + velocityCheck + ", mAreaChanged = " + mAreaChanged);
 		if (!velocityCheck) {
 			hideSub();
 		} else {
@@ -198,6 +193,7 @@ public class AnimationParking {
 				hideSub();
 				return;
 			}
+			
 			showSub();
 		}
 	}
@@ -221,7 +217,7 @@ public class AnimationParking {
 		baseX = i + baseX;
 		Log.i("Suhao", "shrinking x= " + baseX);
 		updateAll(baseX, baseY);
-		if (baseX > Until.SCREEM_WIDTH - Until.IMAGE_WIDTH) {
+		if (baseX >= Until.SCREEM_WIDTH - Until.IMAGE_WIDTH) {
 			baseX = Until.SCREEM_WIDTH - Until.IMAGE_WIDTH;
 			updateAll(baseX, baseY);
 			velocityCheck = false;
@@ -327,10 +323,11 @@ public class AnimationParking {
 			y = 0;
 		}
 		MeterBase.MeterMap.get(MeterBack.NAME).update(x, y);
-		//MeterBase.MeterMap.get(MeterBack.NAME).baseX = x;
+		MeterBase.MeterMap.get(MeterBack.NAME).baseX = x;
 		baseX = x;
-		//MeterBase.MeterMap.get(MeterBack.NAME).baseX = x;
+		MeterBase.MeterMap.get(MeterBack.NAME).baseY = y;
 		baseY = y;
+		//Log.i("way", "updateAll mOriginSide = " + mOriginSide);
 		if (mOriginSide) {
 			updateAllLeft(x, y);
 		} else {
@@ -357,10 +354,6 @@ public class AnimationParking {
 			menuX = (x + Until.SCREEM_WIDTH - Until.IMAGE_WIDTH) / 2;
 			menuY = y + (Until.SCREEM_WIDTH - Until.IMAGE_WIDTH - x) / 2;
 		} else {
-			MeterBase.MeterMap.get(MeterRecent.NAME).update(recentX, recentY);
-			MeterBase.MeterMap.get(MeterHome.NAME).update(homeX, homeY);
-			MeterBase.MeterMap.get(MeterMenu.NAME).update(menuX, menuY);
-			// return;
 			if (x > Until.MID_LINE) {
 				recentX = x + Until.EXPEND_LINE;
 				recentY = y;
@@ -391,6 +384,9 @@ public class AnimationParking {
 				hideSub();
 			}
 		}
+		MeterBase.MeterMap.get(MeterRecent.NAME).update(recentX, recentY);
+		MeterBase.MeterMap.get(MeterHome.NAME).update(homeX, homeY);
+		MeterBase.MeterMap.get(MeterMenu.NAME).update(menuX, menuY);
 	}
 
 	private static void updateBottom(int x, int y) {

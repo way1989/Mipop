@@ -98,12 +98,9 @@ public abstract class MeterBase extends ImageView {
 			setImageResource(resIdPressed);
 			handler4LongClick.postDelayed(runnable4LongClick, 1000L);
 			AnimationParking.stop();
-	        hasMoved = false;
-            isLongClick = false;
-			break;
+			return true;
 		case MotionEvent.ACTION_MOVE:
-			AnimationParking.start();
-			break;
+			return true;
 		case MotionEvent.ACTION_UP:
 			Log.i("OUT", "base UP" + this.hasMoved);
 			setImageResource(resId);
@@ -114,15 +111,22 @@ public abstract class MeterBase extends ImageView {
 					Click();
 				}
 			}
-//	        hasMoved = false;
-//            isLongClick = false;
-//            AnimationParking.start();
-			AnimationParking.shrinkStart();
-			break;
+			if(isLongClick){
+				Log.i("Suhao.Click", "MeterBase.UP, Long click");
+			}else if(hasMoved){
+				Log.i("Suhao.Click", "MeterBase.UP, has moved");
+			}
+			
+	        hasMoved = false;
+	        isLongClick = false;
+            AnimationParking.start();
+            return true;
 
 		default:
 			break;
 		}
+		Log.i("OUT", "base ACTION_OUTSIDE" + this.hasMoved);
+		AnimationParking.shrinkStart();
 		return true;
         /*for (;;)
         {
