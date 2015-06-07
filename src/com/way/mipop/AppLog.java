@@ -6,7 +6,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class AppLog {
-	static final boolean DEBUG = Debug.isDebuggerConnected();
+	static final boolean DEBUG = BuildConfig.DEBUG;
+	// Debug.isDebuggerConnected();
 	static final String TAG = "MiPop";
 
 	public static void DisplayToast(Context context, String message) {
@@ -17,8 +18,9 @@ public class AppLog {
 		if (!DEBUG)
 			return;
 		String className = object.getClass().getName();
-		Log.d(TAG, className.substring(1 + className.lastIndexOf('.')) + ": "
-				+ log);
+		Log.d(className.substring(1 + className.lastIndexOf('.')),
+				className.substring(1 + className.lastIndexOf('.')) + ": "
+						+ log);
 	}
 
 	public static void i(String log) {
@@ -30,15 +32,16 @@ public class AppLog {
 	public static void i(String tag, String log) {
 		if (!DEBUG)
 			return;
-		Log.d(TAG, tag + ": " + log);
+		Log.d(tag, tag + ": " + log);
 	}
 
 	public static void d(Object object, String log) {
 		if (!DEBUG)
 			return;
 		String className = object.getClass().getName();
-		Log.d(TAG, className.substring(1 + className.lastIndexOf('.')) + ": "
-				+ log);
+		Log.d(className.substring(1 + className.lastIndexOf('.')),
+				className.substring(1 + className.lastIndexOf('.')) + ": "
+						+ log);
 	}
 
 	public static void d(String log) {
@@ -50,15 +53,16 @@ public class AppLog {
 	public static void d(String tag, String log) {
 		if (!DEBUG)
 			return;
-		Log.d(TAG, tag + ": " + log);
+		Log.d(tag, tag + ": " + log);
 	}
 
 	public static void e(Object object, String log) {
 		if (!DEBUG)
 			return;
 		String className = object.getClass().getName();
-		Log.e(TAG, className.substring(1 + className.lastIndexOf('.')) + ": "
-				+ log);
+		Log.e(className.substring(1 + className.lastIndexOf('.')),
+				className.substring(1 + className.lastIndexOf('.')) + ": "
+						+ log);
 	}
 
 	public static void e(String log) {
@@ -67,9 +71,9 @@ public class AppLog {
 		Log.e(TAG, log);
 	}
 
-	public static void e(String paramString1, String paramString2) {
+	public static void e(String tag, String log) {
 		if (!DEBUG)
 			return;
-		Log.e(TAG, paramString1 + ": " + paramString2);
+		Log.e(tag, tag + ": " + log);
 	}
 }

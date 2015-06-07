@@ -47,7 +47,7 @@ public class AnimationParking {
 		public void run() {
 			mTimeOut = true;
 			velocityCheck = true;
-			if (AnimationParking.mAreaChanged) {
+			if (mAreaChanged) {
 				mAreaChanged = false;
 			}
 		}
@@ -92,7 +92,7 @@ public class AnimationParking {
 	}
 
 	private static void parking() {
-		AppLog.d("Suhao", "parking baseX = " + baseX);
+		//AppLog.d("way", "parking baseX = " + baseX);
 		if (baseX < Until.MID_LINE) {
 			parking2Margin(true);
 		} else {
@@ -102,6 +102,7 @@ public class AnimationParking {
 	}
 
 	private static void parking2Margin(boolean isLeft) {
+		//AppLog.i("way", "Until.EXPEND_LINE = " + Until.EXPEND_LINE + ", Until.IMAGE_WIDTH = " + Until.IMAGE_WIDTH);
 		int expendLine = Until.EXPEND_LINE;
 		if (!isLeft) {
 			expendLine = Until.SCREEM_WIDTH - Until.IMAGE_WIDTH - Until.EXPEND_LINE;
@@ -114,6 +115,7 @@ public class AnimationParking {
 		updateAll(baseX, baseY);
 		if (Math.abs(baseX - expendLine) <= mStep) {
 			baseX = expendLine;
+			//AppLog.i("way", "final  baseX = " + baseX);
 			updateAll(baseX, baseY);
 			handler4Parking.removeCallbacks(runnable4Parking);
 			handler4Turning.postDelayed(runnable4Turning, mParking2Shrink);
@@ -124,7 +126,7 @@ public class AnimationParking {
 	}
 
 	private static void posCalculateLeftX(int x, int y) {
-		if (x < Until.EXPEND_LINE) {
+		if (x <= Until.EXPEND_LINE) {
 			recentX = x - Until.EXPEND_LINE;
 			recentY = y;
 			homeX = x / 2;
@@ -323,10 +325,10 @@ public class AnimationParking {
 			y = 0;
 		}
 		MeterBase.MeterMap.get(MeterBack.NAME).update(x, y);
-		MeterBase.MeterMap.get(MeterBack.NAME).baseX = x;
-		baseX = x;
-		MeterBase.MeterMap.get(MeterBack.NAME).baseY = y;
-		baseY = y;
+		//MeterBase.MeterMap.get(MeterBack.NAME).baseX = x;
+		MeterBase.baseX = x;
+		//MeterBase.MeterMap.get(MeterBack.NAME).baseY = y;
+		MeterBase.baseY = y;
 		//AppLog.i("way", "updateAll mOriginSide = " + mOriginSide);
 		if (mOriginSide) {
 			updateAllLeft(x, y);
@@ -346,7 +348,7 @@ public class AnimationParking {
 	private static void updateAllRight(int x, int y) {
 		// (Until.IMAGE_WIDTH / 40);
 		showOrHide(x);
-		if (x > Until.EXPEND_LINE_RIGHT) {
+		if (x >= Until.EXPEND_LINE_RIGHT) {
 			recentX = x + Until.EXPEND_LINE;
 			recentY = y;
 			homeX = (x + Until.SCREEM_WIDTH - Until.IMAGE_WIDTH) / 2;

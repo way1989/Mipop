@@ -13,7 +13,7 @@ import com.way.mipop.widget.MeterMenu;
 import com.way.mipop.widget.MeterRecent;
 import com.way.mipop.widget.Until;
 
-public class MyApplication extends Application {
+public class App extends Application {
 	private static MeterBack back = null;
 	private static MeterHome home = null;
 	private static boolean mPowerRecovery = true;

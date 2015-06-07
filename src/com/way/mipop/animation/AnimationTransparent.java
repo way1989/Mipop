@@ -22,11 +22,12 @@ public class AnimationTransparent {
 	};
 	private static int startAlpha = 255;
 	private static int steps = 0;
-	private static long time4Trans;
+	private static long time4Trans = 2000L;
 
 	public static void start() {
 		AppLog.i("Suhao.TransParent", "AnimationTransparent.start()");
-		periodTime = (int) (time4Trans / (endAlpha - startAlpha));
+		periodTime = (int) (time4Trans / (startAlpha - endAlpha));
+		//android.util.Log.i("way"," periodTime = " + periodTime);
 		handler4Transparent.postDelayed(runnable4Transparent, 1L);
 		MeterBase.MeterMap.get(MeterHome.NAME).setVisibility(View.GONE);
 		MeterBase.MeterMap.get(MeterMenu.NAME).setVisibility(View.GONE);

@@ -55,12 +55,13 @@ public class MeterBack extends MeterBase {
 		AnimationParking.land();
 	}
 
+	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		int rawX = (int) event.getRawX();
 		int rawY = (int) event.getRawY() - Until.STATUS_HEIGHT;
-		if ((Math.abs(rawX - mTouchStartX) <= Until.MOVE_MAX_SIZE)
-				&& (Math.abs(rawY - mTouchStartY) <= Until.MOVE_MAX_SIZE))
-			return super.onTouchEvent(event);
+		//if ((Math.abs(rawX - mTouchStartX) <= Until.MOVE_MAX_SIZE)
+		//		&& (Math.abs(rawY - mTouchStartY) <= Until.MOVE_MAX_SIZE))
+		//	return super.onTouchEvent(event);
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			AppLog.i("OUT", "back ACTION_DOWN" + this.hasMoved);
@@ -73,12 +74,12 @@ public class MeterBack extends MeterBase {
 			break;
 		case MotionEvent.ACTION_MOVE:
 			AppLog.i("OUT", "back ACTION_OUTSIDE");
-			int k = rawX - changeX;
-			int m = rawY - changeY;
-			if ((Math.abs(k) > 3) || (Math.abs(m) > 3)) {
-				AppLog.i("MBack", "baseX/offsetX = " + baseX + "/" + k);
-				baseX = k + baseX;
-				baseY = m + baseY;
+			int offsetX = rawX - changeX;
+			int offsetY = rawY - changeY;
+			if ((Math.abs(offsetX) > 3) || (Math.abs(offsetY) > 3)) {
+				AppLog.i("way", "baseX/offsetX = " + baseX + "/" + offsetX);
+				baseX = offsetX + baseX;
+				baseY = offsetY + baseY;
 				AnimationParking.updateAll(baseX, baseY);
 				changeX = rawX;
 				changeY = rawY;

@@ -9,9 +9,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
-import com.way.mipop.api.MyApplication;
+import com.way.mipop.api.App;
 
-public class MIPopActivity extends PreferenceActivity {
+public class MainActivity extends PreferenceActivity {
 	private String TAG = "MIPopActivity";
 	CheckBoxPreference mFullScreen;
 	CheckBoxPreference mMiPop;
@@ -55,9 +55,9 @@ public class MIPopActivity extends PreferenceActivity {
 		if (preference == mMiPop) {
 			AppLog.i(TAG, "onPreferenceTreeClick preference == mMiPop");
 			if (mMiPop.isChecked()) {
-				((MyApplication) getApplication()).showMipop();
+				((App) getApplication()).showMipop();
 			} else {
-				((MyApplication) getApplication()).hideMipop();
+				((App) getApplication()).hideMipop();
 			}
 		} else if (preference == mFullScreen) {
 			AppLog.i(this.TAG, "onPreferenceTreeClick preference == mFullScreen");
@@ -70,7 +70,7 @@ public class MIPopActivity extends PreferenceActivity {
 				AppLog.i(TAG, "sendbroadcast true");
 				mMiPop.setChecked(true);
 				mMiPop.setEnabled(false);
-				((MyApplication) getApplication()).showMipop();
+				((App) getApplication()).showMipop();
 			} else {
 				Intent localIntent2 = new Intent(
 						"zte.com.cn.NAVIGATIONBAR_SHOW");

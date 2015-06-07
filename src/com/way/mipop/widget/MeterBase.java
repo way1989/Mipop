@@ -86,6 +86,7 @@ public abstract class MeterBase extends ImageView {
 		handler4LongClick.removeCallbacks(runnable4LongClick);
 	}
 
+	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		mTouchStartX = (int) event.getRawX();
 		mTouchStartY = (int) event.getRawY() - Until.STATUS_HEIGHT;
