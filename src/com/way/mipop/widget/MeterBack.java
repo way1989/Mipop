@@ -11,17 +11,11 @@ import com.way.mipop.animation.AnimationParking;
 
 public class MeterBack extends MeterBase {
 	public static final String NAME = MeterBack.class.getSimpleName();
-	private final boolean LEFT = true;
-	private final boolean RIGHT = false;
 	private int changeX = 0;
 	private int changeY = 0;
 	private boolean hasMoved = false;
-	private boolean isDown = false;
-	private int mBackX = 0;
-	private int mBackY = 0;
 	private int mTouchStartX = 0;
 	private int mTouchStartY = 0;
-	private int pressX = 0;
 
 	public MeterBack(Context context) {
 		super(context);
@@ -32,7 +26,7 @@ public class MeterBack extends MeterBase {
 	}
 
 	public void Click() {
-		AppLog.i("Suhao.Click", "back click");
+		AppLog.i("way", "back click");
 		playSoundEffect(0);
 		new Thread() {
 			public void run() {
@@ -47,11 +41,12 @@ public class MeterBack extends MeterBase {
 	}
 
 	public void LongClick() {
+		AppLog.i("way", "back  long click");
 	}
 
 	protected void onConfigurationChanged(Configuration configuration) {
 		super.onConfigurationChanged(configuration);
-		Until.initialPop(mContext);
+		Until.initialPop(getContext());
 		AnimationParking.land();
 	}
 
@@ -65,19 +60,17 @@ public class MeterBack extends MeterBase {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			AppLog.i("OUT", "back ACTION_DOWN" + this.hasMoved);
-			mTouchDown = super.onTouchEvent(event);
 			this.changeX = rawX;
 			this.changeY = rawY;
 			this.mTouchStartX = rawX;
 			this.mTouchStartY = rawY;
-			this.isDown = super.onTouchEvent(event);
 			break;
 		case MotionEvent.ACTION_MOVE:
 			AppLog.i("OUT", "back ACTION_OUTSIDE");
 			int offsetX = rawX - changeX;
 			int offsetY = rawY - changeY;
 			if ((Math.abs(offsetX) > 3) || (Math.abs(offsetY) > 3)) {
-				AppLog.i("way", "baseX/offsetX = " + baseX + "/" + offsetX);
+				//AppLog.i("way", "baseX/offsetX = " + baseX + "/" + offsetX);
 				baseX = offsetX + baseX;
 				baseY = offsetY + baseY;
 				AnimationParking.updateAll(baseX, baseY);
@@ -92,9 +85,7 @@ public class MeterBack extends MeterBase {
 					+ Until.MOVE_MAX_SIZE + " / " + baseX);
 			if (!this.hasMoved) {
 			}
-			mTouchDown = false;
 			hasMoved = false;
-			isDown = false;
 			break;
 		default:
 			break;

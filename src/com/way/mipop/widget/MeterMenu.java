@@ -18,7 +18,7 @@ public class MeterMenu extends MeterBase {
 	}
 
 	public void Click() {
-		AppLog.i("CLICK", "menu click");
+		AppLog.i("way", "menu click");
 		playSoundEffect(0);
 		new Thread() {
 			public void run() {
@@ -34,6 +34,6 @@ public class MeterMenu extends MeterBase {
 	}
 
 	public void LongClick() {
-		AppLog.i("Suhao", "menu  long click");
+		AppLog.i("way", "menu  long click");
 	}
 }

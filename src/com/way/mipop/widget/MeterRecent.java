@@ -21,7 +21,7 @@ public class MeterRecent extends MeterBase {
 	}
 
 	public void Click() {
-		AppLog.i("CLICK", "recent  click");
+		AppLog.i("way", "recent  click");
 		playSoundEffect(0);
 		new Thread() {
 			public void run() {
@@ -41,6 +41,6 @@ public class MeterRecent extends MeterBase {
 	}
 
 	public void LongClick() {
-		AppLog.i("Suhao", "recent  long click");
+		AppLog.i("way", "recent  long click");
 	}
 }

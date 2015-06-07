@@ -4,11 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
-import android.graphics.Rect;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -23,24 +20,14 @@ public abstract class MeterBase extends ImageView {
 	public static Map<String, MeterBase> MeterMap = new HashMap<String, MeterBase>();
 	public static int baseX = 0;
 	public static int baseY = Until.SCREEM_HEIGHT / 2;
-	public static Context mContext;
 	public static int mLeftMargin = 0;
 	public static boolean mTouchDown = false;
 	public static Paint paint = new Paint();
-	private static int pressX = 0;
-	private Bitmap bmp;
-	private Bitmap bmpDown;
-	private int changeX = -1;
-	private int changeY = -1;
 	private Handler handler4LongClick = new Handler();
 	private boolean hasMoved = false;
-	private boolean isDown = false;
 	public boolean isLongClick = false;
 	private final long mTime4LongClick = 1000L;
-	private int mTouchStartX = 0;
-	private int mTouchStartY = 0;
 	public WindowManager mWindowManager = null;
-	private Rect rectDst;
 	private int resId = 0;
 	private int resIdPressed = 0;
 	private Runnable runnable4LongClick = new Runnable() {
@@ -53,7 +40,6 @@ public abstract class MeterBase extends ImageView {
 
 	public MeterBase(Context context) {
 		super(context);
-		mContext = context;
 		this.mWindowManager = ((WindowManager) context.getApplicationContext()
 				.getSystemService(Context.WINDOW_SERVICE));
 		this.wmParams.type = LayoutParams.TYPE_SYSTEM_ALERT;
@@ -65,8 +51,6 @@ public abstract class MeterBase extends ImageView {
 		this.wmParams.height = Until.IMAGE_WIDTH;
 		this.wmParams.width = Until.IMAGE_WIDTH;
 		this.mWindowManager.addView(this, wmParams);
-		this.changeX = baseX;
-		this.changeY = baseY;
 	}
 
 	public static Map<String, MeterBase> getMap() {
@@ -88,13 +72,11 @@ public abstract class MeterBase extends ImageView {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		mTouchStartX = (int) event.getRawX();
-		mTouchStartY = (int) event.getRawY() - Until.STATUS_HEIGHT;
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			AppLog.i("OUT", "base DOWN" + hasMoved);
 			setImageResource(resIdPressed);
-			handler4LongClick.postDelayed(runnable4LongClick, 1000L);
+			handler4LongClick.postDelayed(runnable4LongClick, mTime4LongClick);
 			AnimationParking.stop();
 			return true;
 		case MotionEvent.ACTION_MOVE:
@@ -159,31 +141,14 @@ public abstract class MeterBase extends ImageView {
         }*/
 	}
 
-	public void resetAlpha() {
-		paint.setAlpha(255);
-		invalidate();
-	}
-
-	public void setBitmap(int normal, int pressed) {
-		this.bmp = BitmapFactory
-				.decodeResource(mContext.getResources(), normal);
-		this.bmpDown = BitmapFactory.decodeResource(mContext.getResources(),
-				pressed);
-		this.rectDst = new Rect(0, 0, Until.IMAGE_WIDTH, Until.IMAGE_WIDTH);
-	}
-
 	public void setResId(int normal, int pressed) {
-		this.resId = normal;
-		this.resIdPressed = pressed;
-	}
-
-	public void test() {
-		getWindowVisibleDisplayFrame(new Rect());
+		resId = normal;
+		resIdPressed = pressed;
 	}
 
 	public void update(int x, int y) {
-		this.wmParams.x = x;
-		this.wmParams.y = y;
-		this.mWindowManager.updateViewLayout(this, wmParams);
+		wmParams.x = x;
+		wmParams.y = y;
+		mWindowManager.updateViewLayout(this, wmParams);
 	}
 }

@@ -18,7 +18,7 @@ public class MeterHome extends MeterBase {
 	}
 
 	public void Click() {
-		AppLog.i("CLICK", "home   click");
+		AppLog.i("way", "home   click");
 		playSoundEffect(0);
 		new Thread() {
 			public void run() {
@@ -34,6 +34,6 @@ public class MeterHome extends MeterBase {
 	}
 
 	public void LongClick() {
-		AppLog.i("Suhao", "home  long click");
+		AppLog.i("way", "home  long click");
 	}
 }

@@ -14,7 +14,7 @@ import com.way.mipop.widget.Until;
 public class AnimationParking {
 	public static final boolean LEFT = true;
 	public static final boolean RIGHT = false;
-	private static String TAG = "Parking";
+	private static String TAG = "AnimationParking";
 	public static int baseX = MeterBase.baseX;
 	public static int baseY = MeterBase.baseY;
 	private static Handler handler4Parking = new Handler();
@@ -25,7 +25,7 @@ public class AnimationParking {
 	private static int homeY;
 	public static boolean mAreaChanged = false;
 	private static long mAutoUpdatePeriod = 10L;
-	public static boolean mOriginSide = true;
+	public static boolean mOriginSide = LEFT;
 	private static long mParking2Shrink = 2000L;
 	private static int mStep = 15;
 	private static boolean mTimeOut;
@@ -38,7 +38,7 @@ public class AnimationParking {
 
 		@Override
 		public void run() {
-			 parking();
+			parking();
 		}
 	};
 	private static Runnable runnable4PosCheck = new Runnable() {
@@ -55,14 +55,14 @@ public class AnimationParking {
 	private static Runnable runnable4Shrink = new Runnable() {
 		@Override
 		public void run() {
-			 shrinking();
+			shrinking();
 		}
 	};
 	private static Runnable runnable4Turning = new Runnable() {
 
 		@Override
 		public void run() {
-			 turning();
+			turning();
 		}
 	};
 	private static boolean velocityCheck;
@@ -74,9 +74,7 @@ public class AnimationParking {
 	}
 
 	private static void initial() {
-		//MeterBase.MeterMap.get(MeterBack.NAME).baseX = MeterBase.baseX;
 		baseX = MeterBase.baseX;
-		//MeterBase.MeterMap.get(MeterBack.NAME).baseY = MeterBase.baseY;
 		baseY = MeterBase.baseY;
 	}
 
@@ -92,7 +90,6 @@ public class AnimationParking {
 	}
 
 	private static void parking() {
-		//AppLog.d("way", "parking baseX = " + baseX);
 		if (baseX < Until.MID_LINE) {
 			parking2Margin(true);
 		} else {
@@ -102,10 +99,10 @@ public class AnimationParking {
 	}
 
 	private static void parking2Margin(boolean isLeft) {
-		//AppLog.i("way", "Until.EXPEND_LINE = " + Until.EXPEND_LINE + ", Until.IMAGE_WIDTH = " + Until.IMAGE_WIDTH);
 		int expendLine = Until.EXPEND_LINE;
 		if (!isLeft) {
-			expendLine = Until.SCREEM_WIDTH - Until.IMAGE_WIDTH - Until.EXPEND_LINE;
+			expendLine = Until.SCREEM_WIDTH - Until.IMAGE_WIDTH
+					- Until.EXPEND_LINE;
 		}
 		int speed = mStep;
 		if (baseX > expendLine) {
@@ -115,7 +112,6 @@ public class AnimationParking {
 		updateAll(baseX, baseY);
 		if (Math.abs(baseX - expendLine) <= mStep) {
 			baseX = expendLine;
-			//AppLog.i("way", "final  baseX = " + baseX);
 			updateAll(baseX, baseY);
 			handler4Parking.removeCallbacks(runnable4Parking);
 			handler4Turning.postDelayed(runnable4Turning, mParking2Shrink);
@@ -169,7 +165,7 @@ public class AnimationParking {
 		menuX = x;
 		menuY = y;
 		hideSub();
-		
+
 	}
 
 	private static void quickSlide() {
@@ -183,7 +179,6 @@ public class AnimationParking {
 	}
 
 	private static void showOrHide(int x) {
-		//AppLog.i("way", "showOrHide velocityCheck = " + velocityCheck + ", mAreaChanged = " + mAreaChanged);
 		if (!velocityCheck) {
 			hideSub();
 		} else {
@@ -195,7 +190,7 @@ public class AnimationParking {
 				hideSub();
 				return;
 			}
-			
+
 			showSub();
 		}
 	}
@@ -223,7 +218,7 @@ public class AnimationParking {
 			baseX = Until.SCREEM_WIDTH - Until.IMAGE_WIDTH;
 			updateAll(baseX, baseY);
 			velocityCheck = false;
-			mOriginSide = false;
+			mOriginSide = RIGHT;
 			mAreaChanged = false;
 			handler4Shrink.removeCallbacks(runnable4Shrink);
 			AppLog.i("Suhao.TransParent",
@@ -235,10 +230,11 @@ public class AnimationParking {
 			baseX = 0;
 			updateAll(baseX, baseY);
 			velocityCheck = false;
-			mOriginSide = true;
+			mOriginSide = LEFT;
 			mAreaChanged = false;
 			handler4Shrink.removeCallbacks(runnable4Shrink);
-			AppLog.i("Suhao.TransParent", "AnimationParking.shrinking(), baseX<1");
+			AppLog.i("Suhao.TransParent",
+					"AnimationParking.shrinking(), baseX<1");
 			AnimationTransparent.start();
 			return;
 		}
@@ -251,7 +247,7 @@ public class AnimationParking {
 		initial();
 		if (baseX <= 0) {
 			AppLog.i("Suhao.TransParent", "AnimationParking.start(), baseX<0");
-			mOriginSide = true;
+			mOriginSide = LEFT;
 			mAreaChanged = false;
 			velocityCheck = false;
 			baseX = 0;
@@ -261,7 +257,7 @@ public class AnimationParking {
 		if (baseX >= Until.SCREEM_WIDTH - Until.IMAGE_WIDTH) {
 			AppLog.i("Suhao.TransParent",
 					"AnimationParking.start(), baseX>SCREEN_WIDTH-IMAGE_WIDTH");
-			mOriginSide = false;
+			mOriginSide = RIGHT;
 			mAreaChanged = false;
 			velocityCheck = false;
 			baseX = Until.SCREEM_WIDTH - Until.IMAGE_WIDTH;
@@ -325,11 +321,8 @@ public class AnimationParking {
 			y = 0;
 		}
 		MeterBase.MeterMap.get(MeterBack.NAME).update(x, y);
-		//MeterBase.MeterMap.get(MeterBack.NAME).baseX = x;
 		MeterBase.baseX = x;
-		//MeterBase.MeterMap.get(MeterBack.NAME).baseY = y;
 		MeterBase.baseY = y;
-		//AppLog.i("way", "updateAll mOriginSide = " + mOriginSide);
 		if (mOriginSide) {
 			updateAllLeft(x, y);
 		} else {
@@ -346,7 +339,6 @@ public class AnimationParking {
 	}
 
 	private static void updateAllRight(int x, int y) {
-		// (Until.IMAGE_WIDTH / 40);
 		showOrHide(x);
 		if (x >= Until.EXPEND_LINE_RIGHT) {
 			recentX = x + Until.EXPEND_LINE;
@@ -396,25 +388,24 @@ public class AnimationParking {
 			AppLog.i("Bottom", "return");
 			return;
 		}
-		if ((x > Until.SCREEM_WIDTH - Until.PARKING_LINE)
-				|| (x <= Until.MID_LINE))
-			return;
-
-		if ((x < Until.PARKING_LINE) && (x >= Until.MID_LINE))
-			return;
 
 		if (mOriginSide) {
-			AppLog.i("Bottom", "LEFT bar = " + Until.STATUS_HEIGHT);
-			int j = Until.BOTTOM_LINE;
-			baseX = x;
-			baseY = j;
-			updateAll(x, j);
+			if (x >= Until.PARKING_LINE && x <= Until.MID_LINE) {
+				AppLog.i("Bottom", "LEFT bar = " + Until.STATUS_HEIGHT);
+				int offsetY = Until.BOTTOM_LINE;
+				baseX = x;
+				baseY = offsetY;
+				updateAll(x, offsetY);
+			}
 		} else {
-			AppLog.i("Bottom", "RIGHT");
-			int i = Until.BOTTOM_LINE;
-			baseX = x;
-			baseY = i;
-			updateAll(x, i);
+			if (x <= Until.SCREEM_WIDTH - Until.PARKING_LINE
+					&& x > Until.MID_LINE) {
+				AppLog.i("Bottom", "RIGHT");
+				int offsetY = Until.BOTTOM_LINE;
+				baseX = x;
+				baseY = offsetY;
+				updateAll(x, offsetY);
+			}
 		}
 	}
 
@@ -422,22 +413,22 @@ public class AnimationParking {
 		if (y >= (int) (0.707D * Until.IMAGE_WIDTH)) {
 			return;
 		}
-		if ((x > Until.SCREEM_WIDTH - Until.PARKING_LINE)
-				|| (x <= Until.MID_LINE))
-			return;
-		if ((x < Until.PARKING_LINE) || (x >= Until.MID_LINE))
-			return;
 
 		if (mOriginSide) {
-			int j = Until.EXPEND_LINE / 2;
-			baseX = x;
-			baseY = j;
-			updateAll(x, j);
+			if (x >= Until.PARKING_LINE && x <= Until.MID_LINE) {
+				int offsetY = Until.EXPEND_LINE / 2;
+				baseX = x;
+				baseY = offsetY;
+				updateAll(x, offsetY);
+			}
 		} else {
-			int i = Until.EXPEND_LINE / 2;
-			baseX = x;
-			baseY = i;
-			updateAll(x, i);
+			if (x <= Until.SCREEM_WIDTH - Until.PARKING_LINE
+					&& x > Until.MID_LINE) {
+				int offsetY = Until.EXPEND_LINE / 2;
+				baseX = x;
+				baseY = offsetY;
+				updateAll(x, offsetY);
+			}
 		}
 
 	}

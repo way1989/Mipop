@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">屏幕助手</string>
     <string name="mipop_title">屏幕助手</string>
     <string name="mipop_switch_title">屏幕助手</string>
-    <string name="mipop_switch_summary">启动后取代屏幕底部的返回、Home、最近任务、菜单按键</string>
+    <string name="mipop_switch_summary">启动后取代屏幕底部的返回、Home、最近任务、菜单键</string>
     <string name="mipop_fullscreen_title">隐藏底部导航条</string>
     <string name="mipop_fullscreen_summary">隐藏底部导航条，扩大屏幕使用范围</string>
+
 </resources>

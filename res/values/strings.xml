@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Mi-POP</string>
     <string name="mipop_switch_title">Mi-POP</string>
     <string name="mipop_switch_summary">Mi-POP enabled，the navigation bar could be replaced</string>
     <string name="mipop_fullscreen_title">Hide the navigation bar</string>
     <string name="mipop_fullscreen_summary">Larger screen area available</string>
+
 </resources>
