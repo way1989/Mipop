@@ -1,9 +1,9 @@
 package com.way.mipop.animation;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 
+import com.way.mipop.AppLog;
 import com.way.mipop.widget.MeterBack;
 import com.way.mipop.widget.MeterBase;
 import com.way.mipop.widget.MeterHome;
@@ -27,7 +27,7 @@ public class AnimationParking {
 	private static long mAutoUpdatePeriod = 10L;
 	public static boolean mOriginSide = true;
 	private static long mParking2Shrink = 2000L;
-	private static int mStep = 10;
+	private static int mStep = 15;
 	private static boolean mTimeOut;
 	private static long mVelocityTime = 300L;
 	private static int menuX;
@@ -92,28 +92,28 @@ public class AnimationParking {
 	}
 
 	private static void parking() {
-		Log.d("Suhao", "parking baseX = " + baseX);
+		AppLog.d("Suhao", "parking baseX = " + baseX);
 		if (baseX < Until.MID_LINE) {
 			parking2Margin(true);
 		} else {
-			Log.d("MBack", "baseX = " + baseX);
+			AppLog.d("MBack", "baseX = " + baseX);
 			parking2Margin(false);
 		}
 	}
 
 	private static void parking2Margin(boolean isLeft) {
-		int i = Until.EXPEND_LINE;
+		int expendLine = Until.EXPEND_LINE;
 		if (!isLeft) {
-			i = Until.SCREEM_WIDTH - Until.IMAGE_WIDTH - Until.EXPEND_LINE;
+			expendLine = Until.SCREEM_WIDTH - Until.IMAGE_WIDTH - Until.EXPEND_LINE;
 		}
-		int j = mStep;
-		if (baseX > i) {
-			j = -mStep;
+		int speed = mStep;
+		if (baseX > expendLine) {
+			speed = -mStep;
 		}
-		baseX = j + baseX;
+		baseX = speed + baseX;
 		updateAll(baseX, baseY);
-		if (Math.abs(baseX - i) <= 10) {
-			baseX = i;
+		if (Math.abs(baseX - expendLine) <= mStep) {
+			baseX = expendLine;
 			updateAll(baseX, baseY);
 			handler4Parking.removeCallbacks(runnable4Parking);
 			handler4Turning.postDelayed(runnable4Turning, mParking2Shrink);
@@ -144,7 +144,7 @@ public class AnimationParking {
 				return;
 			}
 			if (x < Until.MID_LINE + Until.SHRINK_LINE) {
-				Log.i("Park", "Left shrink x=" + x);
+				AppLog.i("Park", "Left shrink x=" + x);
 				recentX = x - Until.EXPEND_LINE + Until.EXPEND_LINE
 						/ Until.SHRINK_LINE * (x - Until.MID_LINE);
 				recentY = y;
@@ -181,7 +181,7 @@ public class AnimationParking {
 	}
 
 	private static void showOrHide(int x) {
-		//Log.i("way", "showOrHide velocityCheck = " + velocityCheck + ", mAreaChanged = " + mAreaChanged);
+		//AppLog.i("way", "showOrHide velocityCheck = " + velocityCheck + ", mAreaChanged = " + mAreaChanged);
 		if (!velocityCheck) {
 			hideSub();
 		} else {
@@ -210,12 +210,12 @@ public class AnimationParking {
 	}
 
 	private static void shrinking() {
-		int i = 10;
+		int speed = mStep;
 		if (baseX < Until.MID_LINE) {
-			i = -i;
+			speed = -speed;
 		}
-		baseX = i + baseX;
-		Log.i("Suhao", "shrinking x= " + baseX);
+		baseX = speed + baseX;
+		AppLog.i("Suhao", "shrinking x= " + baseX);
 		updateAll(baseX, baseY);
 		if (baseX >= Until.SCREEM_WIDTH - Until.IMAGE_WIDTH) {
 			baseX = Until.SCREEM_WIDTH - Until.IMAGE_WIDTH;
@@ -224,7 +224,7 @@ public class AnimationParking {
 			mOriginSide = false;
 			mAreaChanged = false;
 			handler4Shrink.removeCallbacks(runnable4Shrink);
-			Log.i("Suhao.TransParent",
+			AppLog.i("Suhao.TransParent",
 					"AnimationParking.shrinking(), baseX>SCREEN_WIDTH-IMAGE_WIDTH");
 			AnimationTransparent.start();
 			return;
@@ -236,7 +236,7 @@ public class AnimationParking {
 			mOriginSide = true;
 			mAreaChanged = false;
 			handler4Shrink.removeCallbacks(runnable4Shrink);
-			Log.i("Suhao.TransParent", "AnimationParking.shrinking(), baseX<1");
+			AppLog.i("Suhao.TransParent", "AnimationParking.shrinking(), baseX<1");
 			AnimationTransparent.start();
 			return;
 		}
@@ -244,11 +244,11 @@ public class AnimationParking {
 	}
 
 	public static void start() {
-		Log.i("Suhao", "AnimationParking start()");
+		AppLog.i("Suhao", "AnimationParking start()");
 		quickSlide();
 		initial();
 		if (baseX <= 0) {
-			Log.i("Suhao.TransParent", "AnimationParking.start(), baseX<0");
+			AppLog.i("Suhao.TransParent", "AnimationParking.start(), baseX<0");
 			mOriginSide = true;
 			mAreaChanged = false;
 			velocityCheck = false;
@@ -257,7 +257,7 @@ public class AnimationParking {
 			return;
 		}
 		if (baseX >= Until.SCREEM_WIDTH - Until.IMAGE_WIDTH) {
-			Log.i("Suhao.TransParent",
+			AppLog.i("Suhao.TransParent",
 					"AnimationParking.start(), baseX>SCREEN_WIDTH-IMAGE_WIDTH");
 			mOriginSide = false;
 			mAreaChanged = false;
@@ -271,19 +271,19 @@ public class AnimationParking {
 		if (!mAreaChanged) {
 			if ((baseX < Until.PARKING_LINE)
 					|| (baseX > Until.PARKING_LINE_RIGHT)) {
-				Log.i("Suhao", "LEFT && > MID_LINE");
+				AppLog.i("Suhao", "LEFT && > MID_LINE");
 				handler4Parking.removeCallbacks(runnable4Parking);
 				handler4Shrink.postDelayed(runnable4Shrink, mAutoUpdatePeriod);
 				return;
 			}
 			if ((mOriginSide) && (baseX > Until.MID_LINE)) {
-				Log.i("Suhao", "LEFT && > MID_LINE");
+				AppLog.i("Suhao", "LEFT && > MID_LINE");
 				handler4Parking.removeCallbacks(runnable4Parking);
 				handler4Shrink.postDelayed(runnable4Shrink, mAutoUpdatePeriod);
 				return;
 			}
 			if ((!mOriginSide) && (baseX < Until.MID_LINE)) {
-				Log.i("Suhao", "LEFT && > MID_LINE");
+				AppLog.i("Suhao", "LEFT && > MID_LINE");
 				handler4Parking.removeCallbacks(runnable4Parking);
 				handler4Shrink.postDelayed(runnable4Shrink, mAutoUpdatePeriod);
 				return;
@@ -292,13 +292,13 @@ public class AnimationParking {
 			handler4Parking.postDelayed(runnable4Parking, mAutoUpdatePeriod);
 			return;
 		}
-		Log.i("Suhao", "else");
+		AppLog.i("Suhao", "else");
 		handler4Parking.removeCallbacks(runnable4Parking);
 		handler4Shrink.postDelayed(runnable4Shrink, mAutoUpdatePeriod);
 	}
 
 	public static void stop() {
-		Log.i("Suhao.TransParent", "AnimationParking.stop()");
+		AppLog.i("Suhao.TransParent", "AnimationParking.stop()");
 		AnimationTransparent.stop();
 		handler4Parking.removeCallbacks(runnable4Parking);
 		handler4Shrink.removeCallbacks(runnable4Shrink);
@@ -327,7 +327,7 @@ public class AnimationParking {
 		baseX = x;
 		MeterBase.MeterMap.get(MeterBack.NAME).baseY = y;
 		baseY = y;
-		//Log.i("way", "updateAll mOriginSide = " + mOriginSide);
+		//AppLog.i("way", "updateAll mOriginSide = " + mOriginSide);
 		if (mOriginSide) {
 			updateAllLeft(x, y);
 		} else {
@@ -391,7 +391,7 @@ public class AnimationParking {
 
 	private static void updateBottom(int x, int y) {
 		if (y <= Until.BOTTOM_LINE) {
-			Log.i("Bottom", "return");
+			AppLog.i("Bottom", "return");
 			return;
 		}
 		if ((x > Until.SCREEM_WIDTH - Until.PARKING_LINE)
@@ -402,13 +402,13 @@ public class AnimationParking {
 			return;
 
 		if (mOriginSide) {
-			Log.i("Bottom", "LEFT bar = " + Until.STATUS_HEIGHT);
+			AppLog.i("Bottom", "LEFT bar = " + Until.STATUS_HEIGHT);
 			int j = Until.BOTTOM_LINE;
 			baseX = x;
 			baseY = j;
 			updateAll(x, j);
 		} else {
-			Log.i("Bottom", "RIGHT");
+			AppLog.i("Bottom", "RIGHT");
 			int i = Until.BOTTOM_LINE;
 			baseX = x;
 			baseY = i;

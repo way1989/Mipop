@@ -3,9 +3,9 @@ package com.way.mipop.widget;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.util.Log;
 import android.view.MotionEvent;
 
+import com.way.mipop.AppLog;
 import com.way.mipop.R;
 import com.way.mipop.animation.AnimationParking;
 
@@ -32,15 +32,15 @@ public class MeterBack extends MeterBase {
 	}
 
 	public void Click() {
-		Log.i("Suhao.Click", "back click");
+		AppLog.i("Suhao.Click", "back click");
 		playSoundEffect(0);
 		new Thread() {
 			public void run() {
 				try {
 					new Instrumentation().sendKeyDownUpSync(4);
-					Log.i("shenzhan", "Back implement");
+					AppLog.i("shenzhan", "Back implement");
 				} catch (Exception e) {
-					Log.d("shenzhan", e.toString());
+					AppLog.d("shenzhan", e.toString());
 				}
 			}
 		}.start();
@@ -63,7 +63,7 @@ public class MeterBack extends MeterBase {
 			return super.onTouchEvent(event);
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			Log.i("OUT", "back ACTION_DOWN" + this.hasMoved);
+			AppLog.i("OUT", "back ACTION_DOWN" + this.hasMoved);
 			mTouchDown = super.onTouchEvent(event);
 			this.changeX = rawX;
 			this.changeY = rawY;
@@ -72,11 +72,11 @@ public class MeterBack extends MeterBase {
 			this.isDown = super.onTouchEvent(event);
 			break;
 		case MotionEvent.ACTION_MOVE:
-			Log.i("OUT", "back ACTION_OUTSIDE");
+			AppLog.i("OUT", "back ACTION_OUTSIDE");
 			int k = rawX - changeX;
 			int m = rawY - changeY;
 			if ((Math.abs(k) > 3) || (Math.abs(m) > 3)) {
-				Log.i("MBack", "baseX/offsetX = " + baseX + "/" + k);
+				AppLog.i("MBack", "baseX/offsetX = " + baseX + "/" + k);
 				baseX = k + baseX;
 				baseY = m + baseY;
 				AnimationParking.updateAll(baseX, baseY);
@@ -87,7 +87,7 @@ public class MeterBack extends MeterBase {
 			break;
 
 		case MotionEvent.ACTION_UP:
-			Log.i("Suhao.Click", "MeterBacd.UP, MOVE_MAX_SIZE/baseX= "
+			AppLog.i("Suhao.Click", "MeterBacd.UP, MOVE_MAX_SIZE/baseX= "
 					+ Until.MOVE_MAX_SIZE + " / " + baseX);
 			if (!this.hasMoved) {
 			}
@@ -113,7 +113,7 @@ public class MeterBack extends MeterBase {
         do
         {
             return bool;
-            Log.i("OUT", "back ACTION_DOWN" + this.hasMoved);
+            AppLog.i("OUT", "back ACTION_DOWN" + this.hasMoved);
             mTouchDown = bool;
             this.changeX = i;
             this.changeY = j;
@@ -121,13 +121,13 @@ public class MeterBack extends MeterBase {
             this.mTouchStartY = j;
             this.isDown = bool;
             break;
-            Log.i("OUT", "back ACTION_OUTSIDE");
+            AppLog.i("OUT", "back ACTION_OUTSIDE");
             break;
             int k = i - this.changeX;
             int m = j - this.changeY;
             if ((Math.abs(k) > 3) || (Math.abs(m) > 3))
             {
-                Log.i("MBack", "baseX/offsetX = " + baseX + "/" + k);
+                AppLog.i("MBack", "baseX/offsetX = " + baseX + "/" + k);
                 baseX = k + baseX;
                 baseY = m + baseY;
                 AnimationParking.updateAll(baseX, baseY);
@@ -137,7 +137,7 @@ public class MeterBack extends MeterBase {
         } while ((Math.abs(i - this.mTouchStartX) <= Until.MOVE_MAX_SIZE) && (Math.abs(j - this.mTouchStartY) <= Until.MOVE_MAX_SIZE));
         moved();
         return bool;
-        Log.i("Suhao.Click", "MeterBacd.UP, MOVE_MAX_SIZE/baseX= " + Until.MOVE_MAX_SIZE + " / " + baseX);
+        AppLog.i("Suhao.Click", "MeterBacd.UP, MOVE_MAX_SIZE/baseX= " + Until.MOVE_MAX_SIZE + " / " + baseX);
         if (!this.hasMoved) {}
         mTouchDown = false;
         this.hasMoved = false;

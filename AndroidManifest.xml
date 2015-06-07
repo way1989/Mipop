@@ -6,7 +6,7 @@
     android:sharedUserId="android.uid.system"
 
     <uses-sdk
-        android:minSdkVersion="21"
+        android:minSdkVersion="14"
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />

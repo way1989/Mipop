@@ -1,9 +1,9 @@
 package com.way.mipop.animation;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 
+import com.way.mipop.AppLog;
 import com.way.mipop.widget.MeterBack;
 import com.way.mipop.widget.MeterBase;
 import com.way.mipop.widget.MeterHome;
@@ -25,7 +25,7 @@ public class AnimationTransparent {
 	private static long time4Trans;
 
 	public static void start() {
-		Log.i("Suhao.TransParent", "AnimationTransparent.start()");
+		AppLog.i("Suhao.TransParent", "AnimationTransparent.start()");
 		periodTime = (int) (time4Trans / (endAlpha - startAlpha));
 		handler4Transparent.postDelayed(runnable4Transparent, 1L);
 		MeterBase.MeterMap.get(MeterHome.NAME).setVisibility(View.GONE);
@@ -34,7 +34,7 @@ public class AnimationTransparent {
 	}
 
 	public static void stop() {
-		Log.i("Suhao.TransParent", "AnimationTransparent.stop()");
+		AppLog.i("Suhao.TransParent", "AnimationTransparent.stop()");
 		currentAlpha = startAlpha;
 		handler4Transparent.removeCallbacks(runnable4Transparent);
 		MeterBase.MeterMap.get(MeterBack.NAME).setAlpha(startAlpha/255.0f);
@@ -44,11 +44,11 @@ public class AnimationTransparent {
 	}
 
 	private static void transparenting() {
-		Log.i("Suhao.TransParent",
+		AppLog.i("Suhao.TransParent",
 				"AnimationTransparent.transparenting(), alpha = "
 						+ currentAlpha);
 		if (currentAlpha <= endAlpha) {
-			Log.i("Suhao.TransParent",
+			AppLog.i("Suhao.TransParent",
 					"AnimationTransparent.transparenting(), removeCallbacks");
 			handler4Transparent.removeCallbacks(runnable4Transparent);
 			return;

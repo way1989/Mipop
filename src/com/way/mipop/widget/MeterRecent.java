@@ -2,8 +2,8 @@ package com.way.mipop.widget;
 
 import android.content.Context;
 import android.os.RemoteException;
-import android.util.Log;
 
+import com.way.mipop.AppLog;
 /*import android.os.ServiceManager;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.IStatusBarService.Stub;*/
@@ -21,7 +21,7 @@ public class MeterRecent extends MeterBase {
 	}
 
 	public void Click() {
-		Log.i("CLICK", "recent  click");
+		AppLog.i("CLICK", "recent  click");
 		playSoundEffect(0);
 		new Thread() {
 			public void run() {
@@ -34,13 +34,13 @@ public class MeterRecent extends MeterBase {
 					iStatusBarService.toggleRecentApps();
 					return;
 				} catch (RemoteException e) {
-					Log.i("Input", "DeadOjbectException");
+					AppLog.i("Input", "DeadOjbectException");
 				}*/
 			}
 		}.start();
 	}
 
 	public void LongClick() {
-		Log.i("Suhao", "recent  long click");
+		AppLog.i("Suhao", "recent  long click");
 	}
 }

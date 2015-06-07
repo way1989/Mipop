@@ -8,7 +8,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
-import android.util.Log;
 
 import com.way.mipop.api.MyApplication;
 
@@ -42,7 +41,7 @@ public class MIPopActivity extends PreferenceActivity {
 	}
 
 	public void onCreate(Bundle paramBundle) {
-		Log.i("MyAppWidget", "activity onCreate() " + this.mcontext);
+		AppLog.i("MyAppWidget", "activity onCreate() " + this.mcontext);
 		super.onCreate(paramBundle);
 		addPreferencesFromResource(R.xml.mipop_settings);
 		mMiPop = ((CheckBoxPreference) findPreference("mipop_switch"));
@@ -52,23 +51,23 @@ public class MIPopActivity extends PreferenceActivity {
 
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
 			Preference preference) {
-		Log.i(this.TAG, "onPreferenceTreeClick");
+		AppLog.i(this.TAG, "onPreferenceTreeClick");
 		if (preference == mMiPop) {
-			Log.i(TAG, "onPreferenceTreeClick preference == mMiPop");
+			AppLog.i(TAG, "onPreferenceTreeClick preference == mMiPop");
 			if (mMiPop.isChecked()) {
 				((MyApplication) getApplication()).showMipop();
 			} else {
 				((MyApplication) getApplication()).hideMipop();
 			}
 		} else if (preference == mFullScreen) {
-			Log.i(this.TAG, "onPreferenceTreeClick preference == mFullScreen");
+			AppLog.i(this.TAG, "onPreferenceTreeClick preference == mFullScreen");
 			if (mFullScreen.isChecked()) {
-				Log.i("Suhao.CheckBox", "mFullScreen checked mipop = true");
+				AppLog.i("Suhao.CheckBox", "mFullScreen checked mipop = true");
 				Intent localIntent1 = new Intent(
 						"zte.com.cn.NAVIGATIONBAR_SHOW");
 				localIntent1.putExtra("state", false);
 				sendBroadcast(localIntent1);
-				Log.i(TAG, "sendbroadcast true");
+				AppLog.i(TAG, "sendbroadcast true");
 				mMiPop.setChecked(true);
 				mMiPop.setEnabled(false);
 				((MyApplication) getApplication()).showMipop();
@@ -77,7 +76,7 @@ public class MIPopActivity extends PreferenceActivity {
 						"zte.com.cn.NAVIGATIONBAR_SHOW");
 				localIntent2.putExtra("state", true);
 				sendBroadcast(localIntent2);
-				Log.i(TAG, "sendbroadcast false");
+				AppLog.i(TAG, "sendbroadcast false");
 				mMiPop.setEnabled(true);
 			}
 		}
@@ -87,7 +86,7 @@ public class MIPopActivity extends PreferenceActivity {
 
 	protected void onResume() {
 		super.onResume();
-		Log.i(this.TAG, "+++++++onResume--mcontext=" + this.mcontext);
+		AppLog.i(this.TAG, "+++++++onResume--mcontext=" + this.mcontext);
 		setupFloatIcon();
 		setupFullScreen();
 	}

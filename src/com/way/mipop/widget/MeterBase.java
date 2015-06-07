@@ -10,12 +10,13 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Handler;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ImageView;
 
+import com.way.mipop.AppLog;
 import com.way.mipop.animation.AnimationParking;
 
 public abstract class MeterBase extends ImageView {
@@ -57,12 +58,8 @@ public abstract class MeterBase extends ImageView {
 				.getSystemService(Context.WINDOW_SERVICE));
 		this.wmParams.type = LayoutParams.TYPE_SYSTEM_ALERT;
 		this.wmParams.format = PixelFormat.TRANSPARENT;
-		wmParams.flags = LayoutParams.FLAG_NOT_FOCUSABLE;
-//		WindowManager.LayoutParams localLayoutParams1 = this.wmParams;
-//		localLayoutParams1.flags = (0x8 | localLayoutParams1.flags);
-//		WindowManager.LayoutParams localLayoutParams2 = this.wmParams;
-//		localLayoutParams2.flags = (0x40000 | localLayoutParams2.flags);
-		this.wmParams.gravity = 51;
+		wmParams.flags = LayoutParams.FLAG_NOT_FOCUSABLE | LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
+		this.wmParams.gravity = Gravity.LEFT | Gravity.TOP;
 		this.wmParams.x = baseX;
 		this.wmParams.y = baseY;
 		this.wmParams.height = Until.IMAGE_WIDTH;
@@ -90,11 +87,11 @@ public abstract class MeterBase extends ImageView {
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
-		//mTouchStartX = (int) event.getRawX();
-		//mTouchStartY = (int) event.getRawY() - Until.STATUS_HEIGHT;
+		mTouchStartX = (int) event.getRawX();
+		mTouchStartY = (int) event.getRawY() - Until.STATUS_HEIGHT;
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			Log.i("OUT", "base DOWN" + hasMoved);
+			AppLog.i("OUT", "base DOWN" + hasMoved);
 			setImageResource(resIdPressed);
 			handler4LongClick.postDelayed(runnable4LongClick, 1000L);
 			AnimationParking.stop();
@@ -102,19 +99,19 @@ public abstract class MeterBase extends ImageView {
 		case MotionEvent.ACTION_MOVE:
 			return true;
 		case MotionEvent.ACTION_UP:
-			Log.i("OUT", "base UP" + this.hasMoved);
+			AppLog.i("OUT", "base UP" + this.hasMoved);
 			setImageResource(resId);
 			this.handler4LongClick.removeCallbacks(runnable4LongClick);
 			if (!hasMoved) {
 				if (!isLongClick) {
-					Log.i("Suhao.Click", "MeterBase.UP, Click");
+					AppLog.i("Suhao.Click", "MeterBase.UP, Click");
 					Click();
 				}
 			}
 			if(isLongClick){
-				Log.i("Suhao.Click", "MeterBase.UP, Long click");
+				AppLog.i("Suhao.Click", "MeterBase.UP, Long click");
 			}else if(hasMoved){
-				Log.i("Suhao.Click", "MeterBase.UP, has moved");
+				AppLog.i("Suhao.Click", "MeterBase.UP, has moved");
 			}
 			
 	        hasMoved = false;
@@ -125,24 +122,24 @@ public abstract class MeterBase extends ImageView {
 		default:
 			break;
 		}
-		Log.i("OUT", "base ACTION_OUTSIDE" + this.hasMoved);
+		AppLog.i("OUT", "base ACTION_OUTSIDE" + this.hasMoved);
 		AnimationParking.shrinkStart();
 		return true;
         /*for (;;)
         {
             return true;
-            Log.i("OUT", "base DOWN" + this.hasMoved);
+            AppLog.i("OUT", "base DOWN" + this.hasMoved);
             setImageResource(this.resIdPressed);
             this.handler4LongClick.postDelayed(this.runnable4LongClick, 1000L);
             AnimationParking.stop();
             continue;
-            Log.i("OUT", "base UP" + this.hasMoved);
+            AppLog.i("OUT", "base UP" + this.hasMoved);
             setImageResource(this.resId);
             this.handler4LongClick.removeCallbacks(this.runnable4LongClick);
             if (!this.hasMoved) {
                 if (!this.isLongClick)
                 {
-                    Log.i("Suhao.Click", "MeterBase.UP, Click");
+                    AppLog.i("Suhao.Click", "MeterBase.UP, Click");
                     Click();
                 }
             }
@@ -152,11 +149,11 @@ public abstract class MeterBase extends ImageView {
                 this.isLongClick = false;
                 AnimationParking.start();
                 break;
-                Log.i("Suhao.Click", "MeterBase.UP, Long click");
+                AppLog.i("Suhao.Click", "MeterBase.UP, Long click");
                 continue;
-                Log.i("Suhao.Click", "MeterBase.UP, has moved");
+                AppLog.i("Suhao.Click", "MeterBase.UP, has moved");
             }
-            Log.i("OUT", "base ACTION_OUTSIDE" + this.hasMoved);
+            AppLog.i("OUT", "base ACTION_OUTSIDE" + this.hasMoved);
             AnimationParking.shrinkStart();
         }*/
 	}

@@ -1,10 +1,10 @@
 package com.way.mipop.widget;
 
+import com.way.mipop.AppLog;
 import com.way.mipop.R;
 
 import android.app.Instrumentation;
 import android.content.Context;
-import android.util.Log;
 
 public class MeterHome extends MeterBase {
 	public static final String NAME = MeterHome.class.getSimpleName();
@@ -18,22 +18,22 @@ public class MeterHome extends MeterBase {
 	}
 
 	public void Click() {
-		Log.i("CLICK", "home   click");
+		AppLog.i("CLICK", "home   click");
 		playSoundEffect(0);
 		new Thread() {
 			public void run() {
 				try {
 					new Instrumentation().sendKeyDownUpSync(3);
-					Log.i("shenzhan", "Home implement");
+					AppLog.i("shenzhan", "Home implement");
 					return;
 				} catch (Exception e) {
-					Log.d("shenzhan", e.toString());
+					AppLog.d("shenzhan", e.toString());
 				}
 			}
 		}.start();
 	}
 
 	public void LongClick() {
-		Log.i("Suhao", "home  long click");
+		AppLog.i("Suhao", "home  long click");
 	}
 }
