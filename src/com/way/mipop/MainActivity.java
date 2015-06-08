@@ -9,6 +9,7 @@ import android.provider.Settings;
 
 import com.way.mipop.api.App;
 
+@SuppressWarnings("deprecation")
 public class MainActivity extends PreferenceActivity {
 	private String TAG = "MainActivity";
 	CheckBoxPreference mFullScreen;

@@ -6,8 +6,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class AppLog {
-	static final boolean DEBUG = BuildConfig.DEBUG;
-	// Debug.isDebuggerConnected();
+	static final boolean DEBUG = 
+    //BuildConfig.DEBUG;
+	 Debug.isDebuggerConnected();
 	static final String TAG = "MiPop";
 
 	public static void DisplayToast(Context context, String message) {

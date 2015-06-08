@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.RemoteException;
 
 import com.way.mipop.AppLog;
-/*import android.os.ServiceManager;
+import android.os.ServiceManager;
 import com.android.internal.statusbar.IStatusBarService;
-import com.android.internal.statusbar.IStatusBarService.Stub;*/
+import com.android.internal.statusbar.IStatusBarService.Stub;
 import com.way.mipop.R;
 
 public class MeterRecent extends MeterBase {
@@ -25,7 +25,7 @@ public class MeterRecent extends MeterBase {
 		playSoundEffect(0);
 		new Thread() {
 			public void run() {
-				/*IStatusBarService iStatusBarService = IStatusBarService.Stub
+				IStatusBarService iStatusBarService = IStatusBarService.Stub
 						.asInterface(ServiceManager.getService("statusbar"));
 				if (iStatusBarService != null) {
 				}
@@ -35,7 +35,7 @@ public class MeterRecent extends MeterBase {
 					return;
 				} catch (RemoteException e) {
 					AppLog.i("Input", "DeadOjbectException");
-				}*/
+				}
 			}
 		}.start();
 	}
