@@ -27,7 +27,11 @@ public class App extends Application {
 		AnimationParking.baseX = -1;
 		AnimationParking.updateAll(-1, MeterBack.baseY);
 		MeterBase.MeterMap.get(MeterBack.NAME).setVisibility(View.VISIBLE);
-		AnimationTransparent.start();
+		MeterBase.MeterMap.get(MeterHome.NAME).setVisibility(View.GONE);
+		MeterBase.MeterMap.get(MeterRecent.NAME).setVisibility(View.GONE);
+		MeterBase.MeterMap.get(MeterMenu.NAME).setVisibility(View.GONE);
+		MeterBase.MeterMap.get(MeterBack.NAME).setAlpha(0.4f);
+		AnimationParking.shrinkStart();
 	}
 
 	public void onCreate() {

@@ -87,6 +87,7 @@ public class AnimationParking {
 		if (MeterBase.baseY > Until.SCREEM_HEIGHT) {
 			updateBottom(baseX, baseY);
 		}
+		shrinkStart();
 	}
 
 	private static void parking() {
