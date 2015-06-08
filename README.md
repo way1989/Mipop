@@ -13,6 +13,6 @@ way:
 
 ## 测试截图
 
-![Screenshot 1](https://raw.githubusercontent.com/way1989/AliGesture/master/screenshot/1.gif "Screenshot 1")
+![Screenshot 1](https://raw.githubusercontent.com/way1989/Mipop/master/screenshot/1.gif "Screenshot 1")
 
 
